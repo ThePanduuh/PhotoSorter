@@ -6,13 +6,17 @@ This is a python script I wrote to organize my photos when unloading them from m
 
 This script was written using Python 3. Install Python 3 from https://www.python.org
 
+This script requires compilation into a `.exe` for use as a Send To shortcut in Windows.
+
+I used PyInstaller, which can be installed via pip: `pip install pyinstaller`.
+
 This was built and tested on Windows. No guarantees this will be useful on other operating systems.
 
 ## How to run
 
-This script can be run by either dragging a photo onto the `main.py` file and dropping, which will "pass" the file to the script. The folder the file came from will be sorted. Files that do not end in .JPG or .RAF will not be affected by the script.
+The folder the file came from will be sorted. Files that do not end in .JPG or .RAF will not be affected by the script.
 
-It can also be run by adding the script to the Send To menu on Windows. Once added to the Send To menu, it can be run by selecting a photo, right clicking, Show more options (Win11), Send To, Sort Photos (or whatever custom name you make for the shortcut).
+This script is designed to be run from the Send To menu on Windows. Once added to the Send To menu, it can be run by selecting a photo, right clicking, Show more options (Win11), Send To, Sort Photos (or whatever custom name you make for the shortcut).
 
 Instructions on adding to the Send To menu can be found [here.](#Add-to-Send-To-menu-Windows)
 
@@ -21,7 +25,7 @@ Instructions on adding to the Send To menu can be found [here.](#Add-to-Send-To-
 
 The Fujifilm X-T5 outputs two file types when saving RAW and JPEG files. The files end with .RAF for RAW files, and .JPG for JPG files. If your camera uses different file types, the file types can be edited in the `main.py` script on lines 17 (JPG) and 21 (RAW).
 
-This script uses `sys.argv[1]` which means that the script will only run if a file is sent to it via drag and drop, or via "Send To" menu on Windows. [Add to Send To on Windows](#Add-to-Send-To-menu-Windows)
+This script uses `sys.argv[1]` which means that the script will only run if a file is passed to it via the "Send To" menu on Windows. [Add to Send To on Windows](#Add-to-Send-To-menu-Windows)
 
 The file structure below is the INPUT for the script, where the root folder to be sorted is labeled `Photo_folder`. 
 
@@ -52,16 +56,26 @@ Photo_folder
 All files that do not end in .RAF or .JPEG/.JPG will not be moved.
 
 ## Add to Send To menu Windows
+Note: I wrote these instructions before I realized Windows silently shuttered python scripts from being able to be added to the Send To menu. To run these via Send To menu, they need to be made into .exe files.
+
+The easiest way I found was to install PyInstaller via pip. `pip install pyinstaller`
+
+Navigate to the folder via Command Line.
+
+Run `pyinstaller Sort_Photos.py`
+
+The .exe file will be created and placed in the following path: `../PhotoSorter/dist/Sort_Photos/Sort_Photos.exe`
 
 To add to the Send To menu on Windows:
 * Download the GitHub repository
 * Extract the files and place the PhotoSorter folder in a known location
 	* The folder can be placed on a NAS if you are connected to the server when trying to run the script!
 	* If using the NAS for hosting the script folder, Python will still need to be installed on the computer trying to run the script
-* Open the PhotoSorter folder and select the `main.py` file
-* Right-click, Show more options (Win11), Send To, Desktop (create shortcut)
-* Locate the file on your desktop
-* Rename to a friendly name, ex: "Sort Photos"
+* Run pyinstaller command above
+* Find compiled .exe file in the location above
+* Select .exe file
+* Right-click, Show more options (Win11), Create Shortcut
+* Rename the shortcut to a friendlier name, ex: "Sort Photos"
 * Cut the shortcut to the clipboard
 * Press `Win+R` to open the Run menu
 * Type `shell:sendto` and press Enter
